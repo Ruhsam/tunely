@@ -19,6 +19,10 @@ var controllers = require('./controllers');
  * ROUTES *
  **********/
 
+//GET /api/albums
+app.get('/api/albums', controllers.albums.index);
+
+
 /*
  * HTML Endpoints
  */
