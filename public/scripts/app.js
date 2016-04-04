@@ -12,7 +12,8 @@ sampleAlbums.push({
              artistName: 'Ladyhawke',
              name: 'Ladyhawke',
              releaseDate: '2008, November 18',
-             genres: [ 'new wave', 'indie rock', 'synth pop' ]
+             genres: [ 'new wave', 'indie rock', 'synth pop' ],
+             x: 'hi'
            });
 sampleAlbums.push({
              artistName: 'The Knife',
@@ -39,8 +40,11 @@ sampleAlbums.push({
 
 $(document).ready(function() {
   console.log('app.js loaded!');
-});
+  renderAlbum(sampleAlbums[0]);
+  sampleAlbums.forEach(renderAlbum);
 
+
+});
 
 
 
@@ -49,4 +53,8 @@ $(document).ready(function() {
 function renderAlbum(album) {
   console.log('rendering album:', album);
 
+  var source = $("#albumTemplate").html();
+  var templateFunc = Handlebars.compile(source);
+  newHTML= templateFunc(album);
+  $("#albums").append(newHTML);
 }
