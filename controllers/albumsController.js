@@ -1,7 +1,7 @@
 /************
  * DATABASE *
  ************/
-
+var db = require('../models');
 /* hard-coded data */
 //var albums = [];
 // albums.push({
@@ -36,7 +36,11 @@
 
 // GET /api/albums
 function index(req, res) {
-res.json(albums);
+//res.json(albums);
+db.Album.find({}, function(err, foundAlbums){
+if(err) { console.log('oh no, error!', err); }
+res.json(foundAlbums);
+});
 }
 
 function create(req, res) {

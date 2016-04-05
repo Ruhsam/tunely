@@ -1,79 +1,33 @@
-/* CLIENT-SIDE JS
- *
- * You may edit this file as you see fit.  Try to separate different components
- * into functions and objects as needed.
- *
- */
-
-
-/* hard-coded data! */
-// var sampleAlbums = [];
-// sampleAlbums.push({
-//              artistName: 'Ladyhawke',
-//              name: 'Ladyhawke',
-//              releaseDate: '2008, November 18',
-//              genres: [ 'new wave', 'indie rock', 'synth pop' ],
-//              x: 'hi'
-//            });
-// sampleAlbums.push({
-//              artistName: 'The Knife',
-//              name: 'Silent Shout',
-//              releaseDate: '2006, February 17',
-//              genres: [ 'synth pop', 'electronica', 'experimental' ]
-//            });
-// sampleAlbums.push({
-//              artistName: 'Juno Reactor',
-//              name: 'Shango',
-//              releaseDate: '2000, October 9',
-//              genres: [ 'electronic', 'goa trance', 'tribal house' ]
-//            });
-// sampleAlbums.push({
-//              artistName: 'Philip Wesley',
-//              name: 'Dark Night of the Soul',
-//              releaseDate: '2008, September 12',
-//              genres: [ 'piano' ]
-//            });
-/* end of hard-coded data */
-
-$.ajax({
-   method: 'GET',
-   URL: '/api/albums',
-   success: onSuccess,
-   error: onError
-});
-
-
-
-
-
-
-
 $(document).ready(function() {
   console.log('app.js loaded!');
-  renderAlbum(sampleAlbums[0]);
-  sampleAlbums.forEach(renderAlbum);
 
 
-});
+  $.ajax({
+    method: 'GET',
+    url: '/api/albums',
+    success: handleSuccess,
+    error: handleError
+  });
 
-
-
-
-// this function takes a single album and renders it to the page
-function renderAlbum(album) {
-  console.log('rendering album:', album);
-
-  function onSuccess (json){
-     console.log(json);
-     json.forEach(renderAlbum);
+  function handleSuccess(album) {
+    //allAlbums = json;
+    album.forEach(function(element){
+      renderAlbums(element);
+    });
+  }
+  function handleError() {
+    console.log('error');
+    $('#albumTemplate').text('Failed to load, is the server working?');
   }
 
-  function onError (){
-     console.log('Error, nothing happened');
-  }
 
-  var source = $("#albumTemplate").html();
-  var templateFunc = Handlebars.compile(source);
-  newHTML= templateFunc(album);
-  $("#albums").prepend(newHTML);
+
+}); //ends doc.ready
+
+function renderAlbums(album) {
+  console.log('rendering albums', album);
+  var templateHtml = $('#albumTemplate').html();
+  var templateFun = Handlebars.compile(templateHtml);
+  var newHtml= templateFun(album);
+  $('#albums').append(newHtml);
 }

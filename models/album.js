@@ -13,4 +13,4 @@ var Album = mongoose.model('Album', AlbumSchema);
 
 module.exports = Album;
 
-module.exports.Album = require("./album.js");
+//module.exports.Album = require("./album.js");
