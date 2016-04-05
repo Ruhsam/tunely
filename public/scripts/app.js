@@ -42,14 +42,7 @@ $.ajax({
    error: onError
 });
 
-function onSuccess (json){
-   console.log(json);
-   json.forEach(renderAlbum);
-}
 
-function onError (){
-   console.log('Error, nothing happened');
-}
 
 
 
@@ -70,8 +63,17 @@ $(document).ready(function() {
 function renderAlbum(album) {
   console.log('rendering album:', album);
 
+  function onSuccess (json){
+     console.log(json);
+     json.forEach(renderAlbum);
+  }
+
+  function onError (){
+     console.log('Error, nothing happened');
+  }
+
   var source = $("#albumTemplate").html();
   var templateFunc = Handlebars.compile(source);
   newHTML= templateFunc(album);
-  $("#albums").append(newHTML);
+  $("#albums").prepend(newHTML);
 }
