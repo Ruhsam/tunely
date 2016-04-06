@@ -44,7 +44,12 @@ res.json(foundAlbums);
 }
 
 function create(req, res) {
-  // FILL ME IN !
+
+ console.log('body', req.body);
+ db.Album.create(req.body, function(err, createdAlbum){
+    console.log('createdalbum', createdAlbum);
+    res.json(createdAlbum);
+});
 }
 
 function show(req, res) {
